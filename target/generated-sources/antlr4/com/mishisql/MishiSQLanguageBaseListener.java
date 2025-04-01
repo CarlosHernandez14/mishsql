@@ -23,6 +23,42 @@ public class MishiSQLanguageBaseListener implements MishiSQLanguageListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitStart(MishiSQLanguageParser.StartContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterQuery(MishiSQLanguageParser.QueryContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitQuery(MishiSQLanguageParser.QueryContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSelectQuery(MishiSQLanguageParser.SelectQueryContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSelectQuery(MishiSQLanguageParser.SelectQueryContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCondition(MishiSQLanguageParser.ConditionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCondition(MishiSQLanguageParser.ConditionContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
