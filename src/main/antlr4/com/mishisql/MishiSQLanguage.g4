@@ -2,23 +2,24 @@ grammar MishiSQLanguage;
 
 start
 :
-	query EOF
+	query+ EOF
 ;
 
 // Syntax Rules
 query
-	: selectQuery EOF
-	// | insertQuery EOF
-	// | updateQuery EOF
-	// | deleteQuery EOF
-	// | createTableQuery EOF
-	// | alterTableQuery EOF
-	// | dropTableQuery EOF
-	// | useDatabaseQuery EOF
+	: selectQuery
+	// | insertQuery
+	// | updateQuery
+	// | deleteQuery
+	// | createTableQuery
+	// | alterTableQuery
+	// | dropTableQuery
+	// | useDatabaseQuery
 	;
 
 selectQuery :
-		IMP_ORDER SELECT (ALL | SPECIFIC_COL)? FROM ID (WHERE condition)? (ORDER BY ID (ASC | DESC)?)? (LIMIT INT)? (OFFSET INT)?
+		IMP_ORDER SELECT (ALL | (SPECIFIC_COL ids+=ID (',' ids+=ID)*)) 
+		FROM tableId=ID (WHERE condition)? (ORDER BY orderID=ID (ASC | DESC)?)? (LIMIT INT)? (OFFSET INT)?
 	;
 
 condition
