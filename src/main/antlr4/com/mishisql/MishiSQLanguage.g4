@@ -2,13 +2,14 @@ grammar MishiSQLanguage;
 
 start
 :
-	query EOF
+	query+ EOF
 ;
 
 // Syntax Rules
 query
-	: selectQuery EOF
-	// | insertQuery EOF
+	: createDatabaseQuery 
+		| insertQuery 
+		| selectQuery
 	// | updateQuery EOF
 	// | deleteQuery EOF
 	// | createTableQuery EOF
@@ -17,16 +18,38 @@ query
 	// | useDatabaseQuery EOF
 	;
 
+createDatabaseQuery
+:
+	IMP_ORDER CREATE 'BASE DE DATOS' ID
+;	
+
 selectQuery :
-		IMP_ORDER SELECT (ALL | SPECIFIC_COL)? FROM ID (WHERE condition)? (ORDER BY ID (ASC | DESC)?)? (LIMIT INT)? (OFFSET INT)?
-	;
+	IMP_ORDER SELECT (ALL | SPECIFIC_COL)? FROM ID (WHERE condition)? (ORDER BY ID (ASC | DESC)?)? 
+;
+
+insertQuery 
+: 
+	IMP_ORDER INSERT ID VALUES tuple (',' tuple)*
+;
+
+tuple
+: 
+	'(' value (',' value)* ')'
+;
+
+value
+: 
+	ID | INT | DOUBLE | VARCHAR
+;
 
 condition
 	: ID (IN | LIKE | BETWEEN) (ID | VARCHAR) (AND | OR)? condition?
 	| ID (IS | NOT) NULL (AND | OR)? condition?
 	| ID '=' (ID | INT | DOUBLE | VARCHAR) (AND | OR)? condition?
 	| '(' condition ')' (AND | OR)? condition?
-	;
+;
+
+
 
 
 // Lexer Rules
