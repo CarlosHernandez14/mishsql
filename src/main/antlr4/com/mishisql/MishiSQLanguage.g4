@@ -19,7 +19,7 @@ query
 
 selectQuery :
 		IMP_ORDER SELECT (ALL | (SPECIFIC_COL ids+=ID (COMMA ids+=ID)*)) 
-		FROM tableId=ID (WHERE condition)? (ORDER BY orderID=ID (ASC | DESC)?)? (LIMIT INT)? (OFFSET INT)?
+		FROM tableId=ID (WHERE condition)? (ORDER BY orderID=ID FROM tableidOrder=ID (ASC | DESC)?)? (LIMIT INT)? (OFFSET INT)?
 	;
 
 condition
@@ -65,7 +65,7 @@ LIKE : 'LIKE';
 
 IS : 'IS';
 NULL : 'VACIO';
-ORDER : 'ORDENAR';
+ORDER : 'ORDENAMELO';
 BY : 'POR';
 ASC : 'ASCENDENTE';
 DESC : 'DESCENDENTE';

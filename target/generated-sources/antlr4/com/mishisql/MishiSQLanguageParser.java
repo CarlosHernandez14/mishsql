@@ -39,7 +39,7 @@ public class MishiSQLanguageParser extends Parser {
 		return new String[] {
 			null, "'SEA'", "'MISHI'", "'MUESTRAME'", "'TODOS LOS MISHI DATOS'", "'LOS MISHICAMPOS'", 
 			"'EL CAMPO'", "'DE'", "'DONDE'", "'Y'", "'O'", "'NOT'", "'IN'", "'LIKE'", 
-			"'IS'", "'VACIO'", "'ORDENAR'", "'POR'", "'ASCENDENTE'", "'DESCENDENTE'", 
+			"'IS'", "'VACIO'", "'ORDENAMELO'", "'POR'", "'ASCENDENTE'", "'DESCENDENTE'", 
 			"'LIMIT'", "'OFFSET'", "'AGREGA A'", "'INTO'", "'LOS VALORES'", "'ACTUALIZA LA'", 
 			"'ASIGNA'", "'ELIMINA'", "'HAZME UNA'", "'USA LA BD'", "'TABLA'", "'MODIFICA'", 
 			"'BORRA'", "'AGREGA'", "'COLUMNA'", "'PRIMARIA'", "'IGUAL A'", "'DIFERENTE DE'", 
@@ -222,9 +222,13 @@ public class MishiSQLanguageParser extends Parser {
 		public List<Token> ids = new ArrayList<Token>();
 		public Token tableId;
 		public Token orderID;
+		public Token tableidOrder;
 		public TerminalNode IMP_ORDER() { return getToken(MishiSQLanguageParser.IMP_ORDER, 0); }
 		public TerminalNode SELECT() { return getToken(MishiSQLanguageParser.SELECT, 0); }
-		public TerminalNode FROM() { return getToken(MishiSQLanguageParser.FROM, 0); }
+		public List<TerminalNode> FROM() { return getTokens(MishiSQLanguageParser.FROM); }
+		public TerminalNode FROM(int i) {
+			return getToken(MishiSQLanguageParser.FROM, i);
+		}
 		public List<TerminalNode> ID() { return getTokens(MishiSQLanguageParser.ID); }
 		public TerminalNode ID(int i) {
 			return getToken(MishiSQLanguageParser.ID, i);
@@ -335,7 +339,7 @@ public class MishiSQLanguageParser extends Parser {
 				}
 			}
 
-			setState(45);
+			setState(47);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==ORDER) {
@@ -346,12 +350,16 @@ public class MishiSQLanguageParser extends Parser {
 				match(BY);
 				setState(41);
 				((SelectQueryContext)_localctx).orderID = match(ID);
+				setState(42);
+				match(FROM);
 				setState(43);
+				((SelectQueryContext)_localctx).tableidOrder = match(ID);
+				setState(45);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==ASC || _la==DESC) {
 					{
-					setState(42);
+					setState(44);
 					_la = _input.LA(1);
 					if ( !(_la==ASC || _la==DESC) ) {
 					_errHandler.recoverInline(this);
@@ -367,26 +375,26 @@ public class MishiSQLanguageParser extends Parser {
 				}
 			}
 
-			setState(49);
+			setState(51);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==LIMIT) {
 				{
-				setState(47);
+				setState(49);
 				match(LIMIT);
-				setState(48);
+				setState(50);
 				match(INT);
 				}
 			}
 
-			setState(53);
+			setState(55);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==OFFSET) {
 				{
-				setState(51);
+				setState(53);
 				match(OFFSET);
-				setState(52);
+				setState(54);
 				match(INT);
 				}
 			}
@@ -480,40 +488,40 @@ public class MishiSQLanguageParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(106);
+			setState(108);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,9,_ctx) ) {
 			case 1:
 				{
-				setState(56);
+				setState(58);
 				match(NOT);
-				setState(57);
+				setState(59);
 				condition(7);
 				}
 				break;
 			case 2:
 				{
-				setState(58);
-				match(LPAREN);
-				setState(59);
-				condition(0);
 				setState(60);
+				match(LPAREN);
+				setState(61);
+				condition(0);
+				setState(62);
 				match(RPAREN);
 				}
 				break;
 			case 3:
 				{
-				setState(62);
-				match(SPECIFIC_ATTR);
-				setState(63);
-				((ConditionContext)_localctx).attrName = match(ID);
 				setState(64);
-				match(FROM);
+				match(SPECIFIC_ATTR);
 				setState(65);
-				((ConditionContext)_localctx).tableName = match(ID);
+				((ConditionContext)_localctx).attrName = match(ID);
 				setState(66);
-				match(T__0);
+				match(FROM);
 				setState(67);
+				((ConditionContext)_localctx).tableName = match(ID);
+				setState(68);
+				match(T__0);
+				setState(69);
 				_la = _input.LA(1);
 				if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << EQUAL) | (1L << NOT_EQUAL) | (1L << LESS_THAN) | (1L << LESS_THAN_EQUAL) | (1L << GREATER_THAN) | (1L << GREATER_THAN_EQUAL))) != 0)) ) {
 				_errHandler.recoverInline(this);
@@ -523,101 +531,101 @@ public class MishiSQLanguageParser extends Parser {
 					_errHandler.reportMatch(this);
 					consume();
 				}
-				setState(68);
+				setState(70);
 				value();
 				}
 				break;
 			case 4:
 				{
-				setState(69);
-				match(SPECIFIC_ATTR);
-				setState(70);
-				((ConditionContext)_localctx).attrName = match(ID);
 				setState(71);
-				match(FROM);
+				match(SPECIFIC_ATTR);
 				setState(72);
-				((ConditionContext)_localctx).tableName = match(ID);
+				((ConditionContext)_localctx).attrName = match(ID);
 				setState(73);
-				match(IN);
+				match(FROM);
 				setState(74);
-				match(LPAREN);
+				((ConditionContext)_localctx).tableName = match(ID);
 				setState(75);
+				match(IN);
+				setState(76);
+				match(LPAREN);
+				setState(77);
 				value();
-				setState(80);
+				setState(82);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				while (_la==COMMA) {
 					{
 					{
-					setState(76);
+					setState(78);
 					match(COMMA);
-					setState(77);
+					setState(79);
 					value();
 					}
 					}
-					setState(82);
+					setState(84);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
-				setState(83);
+				setState(85);
 				match(RPAREN);
 				}
 				break;
 			case 5:
 				{
-				setState(85);
-				match(SPECIFIC_ATTR);
-				setState(86);
-				((ConditionContext)_localctx).attrName = match(ID);
 				setState(87);
-				match(FROM);
+				match(SPECIFIC_ATTR);
 				setState(88);
-				((ConditionContext)_localctx).tableName = match(ID);
+				((ConditionContext)_localctx).attrName = match(ID);
 				setState(89);
-				match(LIKE);
+				match(FROM);
 				setState(90);
+				((ConditionContext)_localctx).tableName = match(ID);
+				setState(91);
+				match(LIKE);
+				setState(92);
 				value();
 				}
 				break;
 			case 6:
 				{
-				setState(91);
-				match(SPECIFIC_ATTR);
-				setState(92);
-				((ConditionContext)_localctx).attrName = match(ID);
 				setState(93);
-				match(FROM);
+				match(SPECIFIC_ATTR);
 				setState(94);
-				((ConditionContext)_localctx).tableName = match(ID);
+				((ConditionContext)_localctx).attrName = match(ID);
 				setState(95);
-				match(IS);
+				match(FROM);
 				setState(96);
+				((ConditionContext)_localctx).tableName = match(ID);
+				setState(97);
+				match(IS);
+				setState(98);
 				match(NULL);
 				}
 				break;
 			case 7:
 				{
-				setState(97);
-				match(SPECIFIC_ATTR);
-				setState(98);
-				((ConditionContext)_localctx).attrName = match(ID);
 				setState(99);
-				match(FROM);
+				match(SPECIFIC_ATTR);
 				setState(100);
-				((ConditionContext)_localctx).tableName = match(ID);
+				((ConditionContext)_localctx).attrName = match(ID);
 				setState(101);
-				match(BETWEEN);
+				match(FROM);
 				setState(102);
-				value();
+				((ConditionContext)_localctx).tableName = match(ID);
 				setState(103);
-				match(AND);
+				match(BETWEEN);
 				setState(104);
+				value();
+				setState(105);
+				match(AND);
+				setState(106);
 				value();
 				}
 				break;
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(113);
+			setState(115);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,10,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
@@ -628,9 +636,9 @@ public class MishiSQLanguageParser extends Parser {
 					{
 					_localctx = new ConditionContext(_parentctx, _parentState);
 					pushNewRecursionContext(_localctx, _startState, RULE_condition);
-					setState(108);
+					setState(110);
 					if (!(precpred(_ctx, 8))) throw new FailedPredicateException(this, "precpred(_ctx, 8)");
-					setState(109);
+					setState(111);
 					_la = _input.LA(1);
 					if ( !(_la==AND || _la==OR) ) {
 					_errHandler.recoverInline(this);
@@ -640,12 +648,12 @@ public class MishiSQLanguageParser extends Parser {
 						_errHandler.reportMatch(this);
 						consume();
 					}
-					setState(110);
+					setState(112);
 					condition(9);
 					}
 					} 
 				}
-				setState(115);
+				setState(117);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,10,_ctx);
 			}
@@ -704,68 +712,68 @@ public class MishiSQLanguageParser extends Parser {
 		enterRule(_localctx, 8, RULE_value);
 		int _la;
 		try {
-			setState(132);
+			setState(134);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case INT:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(116);
+				setState(118);
 				match(INT);
 				}
 				break;
 			case DOUBLE:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(117);
+				setState(119);
 				match(DOUBLE);
 				}
 				break;
 			case VARCHAR:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(118);
+				setState(120);
 				match(VARCHAR);
 				}
 				break;
 			case BOOLEAN:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(119);
+				setState(121);
 				match(BOOLEAN);
 				}
 				break;
 			case ID:
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(120);
+				setState(122);
 				match(ID);
 				}
 				break;
 			case LPAREN:
 				enterOuterAlt(_localctx, 6);
 				{
-				setState(121);
+				setState(123);
 				match(LPAREN);
-				setState(122);
+				setState(124);
 				value();
-				setState(127);
+				setState(129);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				while (_la==COMMA) {
 					{
 					{
-					setState(123);
+					setState(125);
 					match(COMMA);
-					setState(124);
+					setState(126);
 					value();
 					}
 					}
-					setState(129);
+					setState(131);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
-				setState(130);
+				setState(132);
 				match(RPAREN);
 				}
 				break;
@@ -800,43 +808,44 @@ public class MishiSQLanguageParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\65\u0089\4\2\t\2"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\65\u008b\4\2\t\2"+
 		"\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\3\2\6\2\16\n\2\r\2\16\2\17\3\2\3\2\3"+
 		"\3\3\3\3\4\3\4\3\4\3\4\3\4\3\4\3\4\7\4\35\n\4\f\4\16\4 \13\4\5\4\"\n\4"+
-		"\3\4\3\4\3\4\3\4\5\4(\n\4\3\4\3\4\3\4\3\4\5\4.\n\4\5\4\60\n\4\3\4\3\4"+
-		"\5\4\64\n\4\3\4\3\4\5\48\n\4\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3"+
-		"\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\7\5Q\n\5\f\5\16\5T"+
-		"\13\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5"+
-		"\3\5\3\5\3\5\3\5\3\5\3\5\3\5\5\5m\n\5\3\5\3\5\3\5\7\5r\n\5\f\5\16\5u\13"+
-		"\5\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\7\6\u0080\n\6\f\6\16\6\u0083\13"+
-		"\6\3\6\3\6\5\6\u0087\n\6\3\6\2\3\b\7\2\4\6\b\n\2\5\3\2\24\25\3\2&+\3\2"+
-		"\13\f\2\u0099\2\r\3\2\2\2\4\23\3\2\2\2\6\25\3\2\2\2\bl\3\2\2\2\n\u0086"+
-		"\3\2\2\2\f\16\5\4\3\2\r\f\3\2\2\2\16\17\3\2\2\2\17\r\3\2\2\2\17\20\3\2"+
-		"\2\2\20\21\3\2\2\2\21\22\7\2\2\3\22\3\3\2\2\2\23\24\5\6\4\2\24\5\3\2\2"+
-		"\2\25\26\7\4\2\2\26!\7\5\2\2\27\"\7\6\2\2\30\31\7\7\2\2\31\36\7\60\2\2"+
-		"\32\33\7-\2\2\33\35\7\60\2\2\34\32\3\2\2\2\35 \3\2\2\2\36\34\3\2\2\2\36"+
-		"\37\3\2\2\2\37\"\3\2\2\2 \36\3\2\2\2!\27\3\2\2\2!\30\3\2\2\2\"#\3\2\2"+
-		"\2#$\7\t\2\2$\'\7\60\2\2%&\7\n\2\2&(\5\b\5\2\'%\3\2\2\2\'(\3\2\2\2(/\3"+
-		"\2\2\2)*\7\22\2\2*+\7\23\2\2+-\7\60\2\2,.\t\2\2\2-,\3\2\2\2-.\3\2\2\2"+
-		".\60\3\2\2\2/)\3\2\2\2/\60\3\2\2\2\60\63\3\2\2\2\61\62\7\26\2\2\62\64"+
-		"\7\61\2\2\63\61\3\2\2\2\63\64\3\2\2\2\64\67\3\2\2\2\65\66\7\27\2\2\66"+
-		"8\7\61\2\2\67\65\3\2\2\2\678\3\2\2\28\7\3\2\2\29:\b\5\1\2:;\7\r\2\2;m"+
-		"\5\b\5\t<=\7.\2\2=>\5\b\5\2>?\7/\2\2?m\3\2\2\2@A\7\b\2\2AB\7\60\2\2BC"+
-		"\7\t\2\2CD\7\60\2\2DE\7\3\2\2EF\t\3\2\2Fm\5\n\6\2GH\7\b\2\2HI\7\60\2\2"+
-		"IJ\7\t\2\2JK\7\60\2\2KL\7\16\2\2LM\7.\2\2MR\5\n\6\2NO\7-\2\2OQ\5\n\6\2"+
-		"PN\3\2\2\2QT\3\2\2\2RP\3\2\2\2RS\3\2\2\2SU\3\2\2\2TR\3\2\2\2UV\7/\2\2"+
-		"Vm\3\2\2\2WX\7\b\2\2XY\7\60\2\2YZ\7\t\2\2Z[\7\60\2\2[\\\7\17\2\2\\m\5"+
-		"\n\6\2]^\7\b\2\2^_\7\60\2\2_`\7\t\2\2`a\7\60\2\2ab\7\20\2\2bm\7\21\2\2"+
-		"cd\7\b\2\2de\7\60\2\2ef\7\t\2\2fg\7\60\2\2gh\7,\2\2hi\5\n\6\2ij\7\13\2"+
-		"\2jk\5\n\6\2km\3\2\2\2l9\3\2\2\2l<\3\2\2\2l@\3\2\2\2lG\3\2\2\2lW\3\2\2"+
-		"\2l]\3\2\2\2lc\3\2\2\2ms\3\2\2\2no\f\n\2\2op\t\4\2\2pr\5\b\5\13qn\3\2"+
-		"\2\2ru\3\2\2\2sq\3\2\2\2st\3\2\2\2t\t\3\2\2\2us\3\2\2\2v\u0087\7\61\2"+
-		"\2w\u0087\7\62\2\2x\u0087\7\63\2\2y\u0087\7\64\2\2z\u0087\7\60\2\2{|\7"+
-		".\2\2|\u0081\5\n\6\2}~\7-\2\2~\u0080\5\n\6\2\177}\3\2\2\2\u0080\u0083"+
-		"\3\2\2\2\u0081\177\3\2\2\2\u0081\u0082\3\2\2\2\u0082\u0084\3\2\2\2\u0083"+
-		"\u0081\3\2\2\2\u0084\u0085\7/\2\2\u0085\u0087\3\2\2\2\u0086v\3\2\2\2\u0086"+
-		"w\3\2\2\2\u0086x\3\2\2\2\u0086y\3\2\2\2\u0086z\3\2\2\2\u0086{\3\2\2\2"+
-		"\u0087\13\3\2\2\2\17\17\36!\'-/\63\67Rls\u0081\u0086";
+		"\3\4\3\4\3\4\3\4\5\4(\n\4\3\4\3\4\3\4\3\4\3\4\3\4\5\4\60\n\4\5\4\62\n"+
+		"\4\3\4\3\4\5\4\66\n\4\3\4\3\4\5\4:\n\4\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5"+
+		"\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\7\5S\n\5"+
+		"\f\5\16\5V\13\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3"+
+		"\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\5\5o\n\5\3\5\3\5\3\5\7\5t\n\5\f"+
+		"\5\16\5w\13\5\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\7\6\u0082\n\6\f\6\16"+
+		"\6\u0085\13\6\3\6\3\6\5\6\u0089\n\6\3\6\2\3\b\7\2\4\6\b\n\2\5\3\2\24\25"+
+		"\3\2&+\3\2\13\f\2\u009b\2\r\3\2\2\2\4\23\3\2\2\2\6\25\3\2\2\2\bn\3\2\2"+
+		"\2\n\u0088\3\2\2\2\f\16\5\4\3\2\r\f\3\2\2\2\16\17\3\2\2\2\17\r\3\2\2\2"+
+		"\17\20\3\2\2\2\20\21\3\2\2\2\21\22\7\2\2\3\22\3\3\2\2\2\23\24\5\6\4\2"+
+		"\24\5\3\2\2\2\25\26\7\4\2\2\26!\7\5\2\2\27\"\7\6\2\2\30\31\7\7\2\2\31"+
+		"\36\7\60\2\2\32\33\7-\2\2\33\35\7\60\2\2\34\32\3\2\2\2\35 \3\2\2\2\36"+
+		"\34\3\2\2\2\36\37\3\2\2\2\37\"\3\2\2\2 \36\3\2\2\2!\27\3\2\2\2!\30\3\2"+
+		"\2\2\"#\3\2\2\2#$\7\t\2\2$\'\7\60\2\2%&\7\n\2\2&(\5\b\5\2\'%\3\2\2\2\'"+
+		"(\3\2\2\2(\61\3\2\2\2)*\7\22\2\2*+\7\23\2\2+,\7\60\2\2,-\7\t\2\2-/\7\60"+
+		"\2\2.\60\t\2\2\2/.\3\2\2\2/\60\3\2\2\2\60\62\3\2\2\2\61)\3\2\2\2\61\62"+
+		"\3\2\2\2\62\65\3\2\2\2\63\64\7\26\2\2\64\66\7\61\2\2\65\63\3\2\2\2\65"+
+		"\66\3\2\2\2\669\3\2\2\2\678\7\27\2\28:\7\61\2\29\67\3\2\2\29:\3\2\2\2"+
+		":\7\3\2\2\2;<\b\5\1\2<=\7\r\2\2=o\5\b\5\t>?\7.\2\2?@\5\b\5\2@A\7/\2\2"+
+		"Ao\3\2\2\2BC\7\b\2\2CD\7\60\2\2DE\7\t\2\2EF\7\60\2\2FG\7\3\2\2GH\t\3\2"+
+		"\2Ho\5\n\6\2IJ\7\b\2\2JK\7\60\2\2KL\7\t\2\2LM\7\60\2\2MN\7\16\2\2NO\7"+
+		".\2\2OT\5\n\6\2PQ\7-\2\2QS\5\n\6\2RP\3\2\2\2SV\3\2\2\2TR\3\2\2\2TU\3\2"+
+		"\2\2UW\3\2\2\2VT\3\2\2\2WX\7/\2\2Xo\3\2\2\2YZ\7\b\2\2Z[\7\60\2\2[\\\7"+
+		"\t\2\2\\]\7\60\2\2]^\7\17\2\2^o\5\n\6\2_`\7\b\2\2`a\7\60\2\2ab\7\t\2\2"+
+		"bc\7\60\2\2cd\7\20\2\2do\7\21\2\2ef\7\b\2\2fg\7\60\2\2gh\7\t\2\2hi\7\60"+
+		"\2\2ij\7,\2\2jk\5\n\6\2kl\7\13\2\2lm\5\n\6\2mo\3\2\2\2n;\3\2\2\2n>\3\2"+
+		"\2\2nB\3\2\2\2nI\3\2\2\2nY\3\2\2\2n_\3\2\2\2ne\3\2\2\2ou\3\2\2\2pq\f\n"+
+		"\2\2qr\t\4\2\2rt\5\b\5\13sp\3\2\2\2tw\3\2\2\2us\3\2\2\2uv\3\2\2\2v\t\3"+
+		"\2\2\2wu\3\2\2\2x\u0089\7\61\2\2y\u0089\7\62\2\2z\u0089\7\63\2\2{\u0089"+
+		"\7\64\2\2|\u0089\7\60\2\2}~\7.\2\2~\u0083\5\n\6\2\177\u0080\7-\2\2\u0080"+
+		"\u0082\5\n\6\2\u0081\177\3\2\2\2\u0082\u0085\3\2\2\2\u0083\u0081\3\2\2"+
+		"\2\u0083\u0084\3\2\2\2\u0084\u0086\3\2\2\2\u0085\u0083\3\2\2\2\u0086\u0087"+
+		"\7/\2\2\u0087\u0089\3\2\2\2\u0088x\3\2\2\2\u0088y\3\2\2\2\u0088z\3\2\2"+
+		"\2\u0088{\3\2\2\2\u0088|\3\2\2\2\u0088}\3\2\2\2\u0089\13\3\2\2\2\17\17"+
+		"\36!\'/\61\659Tnu\u0083\u0088";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
