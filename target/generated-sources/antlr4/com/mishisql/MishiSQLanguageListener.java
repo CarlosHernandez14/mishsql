@@ -47,4 +47,14 @@ public interface MishiSQLanguageListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitCondition(MishiSQLanguageParser.ConditionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MishiSQLanguageParser#value}.
+	 * @param ctx the parse tree
+	 */
+	void enterValue(MishiSQLanguageParser.ValueContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MishiSQLanguageParser#value}.
+	 * @param ctx the parse tree
+	 */
+	void exitValue(MishiSQLanguageParser.ValueContext ctx);
 }

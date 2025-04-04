@@ -34,4 +34,10 @@ public interface MishiSQLanguageVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitCondition(MishiSQLanguageParser.ConditionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MishiSQLanguageParser#value}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitValue(MishiSQLanguageParser.ValueContext ctx);
 }

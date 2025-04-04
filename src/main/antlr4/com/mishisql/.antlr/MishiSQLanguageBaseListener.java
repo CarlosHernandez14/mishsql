@@ -1,4 +1,4 @@
-// Generated from c:/Users/carlo/Documents/CompilersAntlr/mishsql/src/main/antlr4/com/mishisql/MishiSQLanguage.g4 by ANTLR 4.13.1
+// Generated from c:/Users/carlo/Documents/CompilersAntlr/mishisql/src/main/antlr4/com/mishisql/MishiSQLanguage.g4 by ANTLR 4.13.1
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
@@ -23,6 +23,42 @@ public class MishiSQLanguageBaseListener implements MishiSQLanguageListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitStart(MishiSQLanguageParser.StartContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterQuery(MishiSQLanguageParser.QueryContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitQuery(MishiSQLanguageParser.QueryContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSelectQuery(MishiSQLanguageParser.SelectQueryContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSelectQuery(MishiSQLanguageParser.SelectQueryContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCondition(MishiSQLanguageParser.ConditionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCondition(MishiSQLanguageParser.ConditionContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
