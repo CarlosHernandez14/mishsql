@@ -59,6 +59,18 @@ public class MishiSQLanguageBaseListener implements MishiSQLanguageListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitCondition(MishiSQLanguageParser.ConditionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterValue(MishiSQLanguageParser.ValueContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitValue(MishiSQLanguageParser.ValueContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
