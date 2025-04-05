@@ -19,7 +19,16 @@ query
 
 selectQuery :
 		IMP_ORDER SELECT (ALL | (SPECIFIC_COL ids+=ID (COMMA ids+=ID)*)) 
-		FROM tableId=ID (WHERE condition)? (ORDER BY orderID=ID FROM tableidOrder=ID (ASC | DESC)?)? (LIMIT INT)? (OFFSET INT)?
+		(
+			(FROM tableId=ID) | from_join+
+		) 
+		(WHERE condition)? (ORDER BY orderID=ID FROM tableidOrder=ID (ASC | DESC)?)? (LIMIT limitValue=INT 'REGISTROS')? (OFFSET INT)?
+	;
+
+
+from_join :  
+		'DE LA' joinType=(INNER_JOIN | LEFT_JOIN | RIGHT_JOIN | FULL_JOIN) 'DE'
+		tableIdJoin=ID WITH joinTable=ID ON join_condition
 	;
 
 condition
@@ -31,6 +40,10 @@ condition
 	| SPECIFIC_ATTR attrName=ID FROM tableName=ID LIKE value
 	| SPECIFIC_ATTR attrName=ID FROM tableName=ID IS NULL
 	| SPECIFIC_ATTR attrName=ID FROM tableName=ID BETWEEN value AND value
+	;
+
+join_condition
+	: SPECIFIC_ATTR attrName=ID FROM tableName=ID 'SEA' EQUAL attrJoin=ID FROM tableJoin=ID
 	;
 
 value
@@ -56,7 +69,16 @@ ALL : 'TODOS LOS MISHI DATOS';
 SPECIFIC_COL: 'LOS MISHICAMPOS';
 SPECIFIC_ATTR : 'EL CAMPO';
 FROM : 'DE';
-WHERE : 'DONDE';
+WHERE : 'FILTRANDO DONDE';
+ON : 'DONDE';
+
+// JOIN TYPES
+WITH : 'CON';
+INNER_JOIN : 'UNION INTERNA';
+LEFT_JOIN : 'UNION IZQUIERDA';
+RIGHT_JOIN : 'UNION DERECHA';
+FULL_JOIN : 'UNION COMPLETA';
+
 AND : 'Y';
 OR : 'O';
 NOT : 'NOT';
@@ -69,7 +91,7 @@ ORDER : 'ORDENAMELO';
 BY : 'POR';
 ASC : 'ASCENDENTE';
 DESC : 'DESCENDENTE';
-LIMIT : 'LIMIT';
+LIMIT : 'PERO SOLO DAME';
 OFFSET : 'OFFSET';
 INSERT : 'AGREGA A';
 INTO : 'INTO';

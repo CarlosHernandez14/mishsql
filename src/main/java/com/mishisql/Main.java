@@ -12,9 +12,9 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         String files[] = args.length == 0 ? new String[] { "test." + EXTENSION } : args;
-        System.out.println("Dirbase: " + DIRBASE);
+        // System.out.println("Dirbase: " + DIRBASE);
         for (String file : files) {
-            System.out.println("START: " + file);
+            // System.out.println("START: " + file);
 
             CharStream in = CharStreams.fromFileName(DIRBASE + file);
             MishiSQLanguageLexer lexer = new MishiSQLanguageLexer(in);
@@ -28,7 +28,7 @@ public class Main {
                 System.out.println("Transformed Query: " + query.toSQL());
             });
 
-            System.out.println("FINISH: " + file);
+            // System.out.println("FINISH: " + file);
         }
     }
 }

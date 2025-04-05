@@ -49,7 +49,7 @@ public class SelectStructure extends QueryStructure {
         }
         
         if (orderByColumn != null && !orderByColumn.isEmpty()) {
-            sql.append(" ORDER BY ").append(orderByColumn).append(" ").append(orderDirection);
+            sql.append("ORDER BY ").append(orderByColumn).append(" ").append(orderDirection);
         }
         
         if (limit != null && !limit.isEmpty()) {
