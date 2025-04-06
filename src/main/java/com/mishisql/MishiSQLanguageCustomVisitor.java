@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gson.Gson;
+import com.mishisql.exceptionhandling.CustomErrorListener;
 import com.mishisql.querystructure.JoinStructure;
 import com.mishisql.querystructure.QueryStructure;
 import com.mishisql.querystructure.SelectStructure;
@@ -17,6 +19,9 @@ public class MishiSQLanguageCustomVisitor extends MishiSQLanguageBaseVisitor<Obj
 
     // Map to store the table name and its structure
     private Map<String, List<String>> tableStructure;
+
+    // Custom error listener to also handle the semantic errors
+    private CustomErrorListener errorListener;
 
     @Override
     public Object visitSelectQuery(MishiSQLanguageParser.SelectQueryContext ctx) {
@@ -157,6 +162,18 @@ public class MishiSQLanguageCustomVisitor extends MishiSQLanguageBaseVisitor<Obj
 
     public List<QueryStructure> getTransformedQueries() {
         return transformedQueries;
+    }
+
+    public void setCustomErrorListener(CustomErrorListener errorListener) {
+        this.errorListener = errorListener;
+    }
+
+    public String getTransformedQueriesAsJson() {
+        List<String> stringQueries = this.transformedQueries.stream()
+                .map(QueryStructure::toSQL)
+                .toList();
+        Gson gson = new Gson();
+        return gson.toJson(stringQueries);
     }
 
 }

@@ -2,6 +2,8 @@ package com.mishisql.exceptionhandling;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+
 import com.google.gson.Gson;
 import org.antlr.v4.runtime.BaseErrorListener;
 import org.antlr.v4.runtime.RecognitionException;
@@ -47,10 +49,14 @@ public class CustomErrorListener extends BaseErrorListener {
         return gson.toJson(errors);
     }
 
+    public List<CompilerError> getErrors() {
+        return errors;
+    }
+
 
 
     // Clase interna (o externa) para representar un error
-    static class CompilerError {
+    public static class CompilerError {
         int line;
         int column;
         String type;    // "SyntaxError" o "SemanticError"
