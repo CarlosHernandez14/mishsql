@@ -1,6 +1,7 @@
 package com.mishisql.querystructure;
 
 public class UseDatabaseStructure extends QueryStructure {
+    
     private String databaseName;
 
     public UseDatabaseStructure(String databaseName) {

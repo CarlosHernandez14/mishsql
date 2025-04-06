@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.mishisql.querystructure.CreateDatabaseStructure;
+import com.mishisql.querystructure.CreateTableStructure;
 import com.mishisql.querystructure.QueryStructure;
 import com.mishisql.querystructure.SelectStructure;
 import com.mishisql.querystructure.UseDatabaseStructure;
@@ -36,6 +37,52 @@ public class MishiSQLanguageCustomVisitor extends MishiSQLanguageBaseVisitor<Obj
 
         this.queryStructure = useDBStructure;
         this.transformedQueries.add(useDBStructure);
+
+        return super.visitChildren(ctx);
+    }
+
+    @Override
+    public Object visitCreateTableQuery(MishiSQLanguageParser.CreateTableQueryContext ctx) {
+        String tableName = ctx.tableName.getText();
+        CreateTableStructure structure = new CreateTableStructure(tableName);
+
+        // Procesar campos
+        for (MishiSQLanguageParser.TableFieldContext fieldCtx : ctx.tableFields().tableField()) {
+            String name = fieldCtx.fieldName.getText();
+            String type;
+            switch (fieldCtx.fieldType.getText()) {
+                case    "ENTERO"    : type = "INT";             break;
+                case    "TEXTO"     : type = "VARCHAR(255)";    break;
+                case    "DECIMAL"   : type = "DECIMAL";         break;
+                default             : type = "TEXT";
+            }
+
+            CreateTableStructure.ColumnDefinition column = new CreateTableStructure.ColumnDefinition(name, type);
+
+            if (fieldCtx.constraints != null) {
+                for (MishiSQLanguageParser.FieldConstraintContext cons : fieldCtx.constraints) {
+                    if (cons.getText().equals("MISHILLAVEPRIMARIA") || cons.getText().contains("PRIMARIA")) {
+                        column.isPrimaryKey = true;
+                    }
+                    if (cons.getText().contains("NOSEA") || cons.getText().contains("NULO")) {
+                        column.isNotNull = true;
+                    }
+                }
+            }
+
+            structure.addColumn(column);
+        }
+
+        // Foreign key clause
+        if (ctx.foreignKeyClause() != null) {
+            String fk = ctx.foreignKeyClause().fkField.getText();
+            String refField = ctx.foreignKeyClause().refField.getText();
+            String refTable = ctx.foreignKeyClause().refTable.getText();
+            structure.setForeignKey(fk, refField, refTable);
+        }
+
+        this.queryStructure = structure;
+        this.transformedQueries.add(structure);
 
         return super.visitChildren(ctx);
     }

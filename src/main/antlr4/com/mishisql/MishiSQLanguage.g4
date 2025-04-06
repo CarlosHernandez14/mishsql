@@ -11,7 +11,7 @@ query
 	selectQuery
 	| createDatabaseQuery
 	| useDatabaseQuery
-	// | createTableQuery
+	| createTableQuery
 	// | insertQuery
 
 	// | updateQuery
@@ -28,6 +28,39 @@ createDatabaseQuery
 useDatabaseQuery 
 :
 	IMP_ORDER USE dbName=ID
+;
+
+createTableQuery
+:
+	IMP_ORDER CREATE TABLE tableName=ID 'CON' SPECIFIC_COL tableFields (foreignKeyClause)?
+;
+
+tableFields
+: 
+	tableField (COMMA tableField)* (COMMA)?
+;
+
+tableField
+: 
+	fieldName=ID fieldType=sqlType ('QUE' constraints+=fieldConstraint (constraints+=fieldConstraint)*)?
+;
+
+sqlType
+: 
+	'ENTERO'     
+    | 'TEXTO'      
+    | 'DECIMAL'    
+;
+
+fieldConstraint
+: 
+	'SEA MISHILLAVE PRIMARIA'  
+    | 'NO SEA NULO'          
+;
+
+foreignKeyClause
+: 
+	'Y CON LA MISHILLAVE FORANEA' fkField=ID 'QUE APUNTA A' refField=ID 'DE' refTable=ID
 ;
 
 selectQuery 
