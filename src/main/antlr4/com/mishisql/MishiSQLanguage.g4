@@ -12,7 +12,7 @@ query
 	| createDatabaseQuery
 	| useDatabaseQuery
 	| createTableQuery
-	// | insertQuery
+	| insertQuery
 
 	// | updateQuery
 	// | deleteQuery
@@ -61,6 +61,21 @@ fieldConstraint
 foreignKeyClause
 : 
 	'Y CON LA MISHILLAVE FORANEA' fkField=ID 'QUE APUNTA A' refField=ID 'DE' refTable=ID
+;
+
+insertQuery 
+: 
+	IMP_ORDER INSERT ID VALUES valueTuples
+;
+
+valueTuples
+: 
+	valueTuple (COMMA valueTuple)*
+;
+
+valueTuple
+: 
+	LPAREN value (COMMA value)* RPAREN
 ;
 
 selectQuery 

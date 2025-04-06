@@ -7,6 +7,7 @@ import java.util.Map;
 
 import com.mishisql.querystructure.CreateDatabaseStructure;
 import com.mishisql.querystructure.CreateTableStructure;
+import com.mishisql.querystructure.InsertStructure;
 import com.mishisql.querystructure.QueryStructure;
 import com.mishisql.querystructure.SelectStructure;
 import com.mishisql.querystructure.UseDatabaseStructure;
@@ -84,6 +85,25 @@ public class MishiSQLanguageCustomVisitor extends MishiSQLanguageBaseVisitor<Obj
         this.queryStructure = structure;
         this.transformedQueries.add(structure);
 
+        return super.visitChildren(ctx);
+    }
+
+    @Override
+    public Object visitInsertQuery(MishiSQLanguageParser.InsertQueryContext ctx) {
+        String tableName = ctx.ID().getText();
+        InsertStructure insertStructure = new InsertStructure(tableName);
+
+        for (MishiSQLanguageParser.ValueTupleContext tupleCtx : ctx.valueTuples().valueTuple()) {
+            List<String> values = new ArrayList<>();
+            for (MishiSQLanguageParser.ValueContext valCtx : tupleCtx.value()) {
+                values.add(valCtx.getText());
+            }
+            insertStructure.addRow(values);
+        }   
+
+        this.queryStructure = insertStructure;
+        this.transformedQueries.add(insertStructure);
+        
         return super.visitChildren(ctx);
     }
 
