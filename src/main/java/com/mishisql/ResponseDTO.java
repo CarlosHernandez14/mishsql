@@ -7,11 +7,11 @@ import com.mishisql.exceptionhandling.CustomErrorListener.CompilerError;
 import com.mishisql.querystructure.QueryStructure;
 
 public class ResponseDTO {
-    private List<QueryStructure> transformedQueries;
+    private List<String> transformedQueries;
 
     private List<CompilerError> errors;
 
-    public ResponseDTO(List<QueryStructure> transformedQueries, List<CompilerError> errors) {
+    public ResponseDTO(List<String> transformedQueries, List<CompilerError> errors) {
         this.transformedQueries = transformedQueries;
         this.errors = errors;
     }

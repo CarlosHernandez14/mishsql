@@ -38,7 +38,7 @@ public class Main {
             visitor.visit(tree);
 
 
-            ResponseDTO responseDTO = new ResponseDTO(visitor.getTransformedQueries(), errorListener.getErrors());
+            ResponseDTO responseDTO = new ResponseDTO(visitor.getTransformedQueriesAsList(), errorListener.getErrors());
 
             System.out.println(responseDTO.getReponseAsJson());
             // visitor.getTransformedQueries().forEach(query -> {

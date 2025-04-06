@@ -176,4 +176,10 @@ public class MishiSQLanguageCustomVisitor extends MishiSQLanguageBaseVisitor<Obj
         return gson.toJson(stringQueries);
     }
 
+    public List<String> getTransformedQueriesAsList() {
+        return this.transformedQueries.stream()
+                .map(QueryStructure::toSQL)
+                .toList();
+    }
+
 }
