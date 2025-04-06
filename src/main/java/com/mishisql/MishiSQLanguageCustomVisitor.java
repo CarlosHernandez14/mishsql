@@ -2,6 +2,7 @@
 package com.mishisql;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,21 +20,38 @@ public class MishiSQLanguageCustomVisitor extends MishiSQLanguageBaseVisitor<Obj
     private QueryStructure queryStructure;
 
     // Map to store the table name and its structure
-    private Map<String, List<String>> tableStructure;
+    private Map<String, List<String>> tableStructure = new HashMap<>();
+
+    private String currentDatabaseName = null;
 
     @Override
     public Object visitCreateDatabaseQuery(MishiSQLanguageParser.CreateDatabaseQueryContext ctx) {
         String dbName = ctx.dbName.getText();
+
+        if (tableStructure.containsKey(dbName)) {
+            System.out.println("Error: La base de datos '"+ dbName + "' ya existe.");
+        } 
+
+        tableStructure.put(dbName, new ArrayList<>());
+
         CreateDatabaseStructure createDbStructure = new CreateDatabaseStructure(dbName);
 
         this.queryStructure = createDbStructure;
         this.transformedQueries.add(createDbStructure);
+
         return super.visitChildren(ctx);
     }
 
     @Override
     public Object visitUseDatabaseQuery(MishiSQLanguageParser.UseDatabaseQueryContext ctx) {
         String dbName = ctx.dbName.getText();
+
+        if (!tableStructure.containsKey(dbName)) {
+            System.out.println("Error: La base de datos '"+ dbName + "' no existe.");
+        } 
+
+        setCurrentDatabaseName(dbName);
+
         UseDatabaseStructure useDBStructure = new UseDatabaseStructure(dbName);
 
         this.queryStructure = useDBStructure;
@@ -45,6 +63,16 @@ public class MishiSQLanguageCustomVisitor extends MishiSQLanguageBaseVisitor<Obj
     @Override
     public Object visitCreateTableQuery(MishiSQLanguageParser.CreateTableQueryContext ctx) {
         String tableName = ctx.tableName.getText();
+
+        List<String> tables = tableStructure.get(getCurrentDatabaseName());
+
+        if (tables.contains(tableName)) {
+            System.out.println("Error: La tabla '"+ tableName + "' ya existe en la base de datos '" + getCurrentDatabaseName() + "'.");
+        }
+
+        tables.add(tableName);
+
+
         CreateTableStructure structure = new CreateTableStructure(tableName);
 
         // Procesar campos
@@ -179,6 +207,21 @@ public class MishiSQLanguageCustomVisitor extends MishiSQLanguageBaseVisitor<Obj
 
     public List<QueryStructure> getTransformedQueries() {
         return transformedQueries;
+    }
+
+    // Método para asignar la base de datos activa
+    public void setCurrentDatabaseName(String dbName) {
+        this.currentDatabaseName = dbName;
+    }
+
+    // Método para obtener el nombre de la base de datos actual
+    public String getCurrentDatabaseName() {
+        return this.currentDatabaseName;
+    }
+
+    // Validar si hay una base seleccionada
+    public boolean currentDatabaseSelected() {
+        return this.currentDatabaseName != null;
     }
 
 }
