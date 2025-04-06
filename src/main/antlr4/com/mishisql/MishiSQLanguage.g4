@@ -7,23 +7,38 @@ start
 
 // Syntax Rules
 query
-	: selectQuery
+: 
+	selectQuery
+	| createDatabaseQuery
+	| useDatabaseQuery
+	// | createTableQuery
 	// | insertQuery
+
 	// | updateQuery
 	// | deleteQuery
-	// | createTableQuery
 	// | alterTableQuery
 	// | dropTableQuery
-	// | useDatabaseQuery
-	;
+;
 
-selectQuery :
-		IMP_ORDER SELECT (ALL | (SPECIFIC_COL ids+=ID (COMMA ids+=ID)*)) 
-		FROM tableId=ID (WHERE condition)? (ORDER BY orderID=ID FROM tableidOrder=ID (ASC | DESC)?)? (LIMIT INT)? (OFFSET INT)?
-	;
+createDatabaseQuery 
+:
+	IMP_ORDER CREATE ' BASE DE DATOS ' dbName=ID
+;
+
+useDatabaseQuery 
+:
+	IMP_ORDER USE dbName=ID
+;
+
+selectQuery 
+:
+	IMP_ORDER SELECT (ALL | (SPECIFIC_COL ids+=ID (COMMA ids+=ID)*)) 
+	FROM tableId=ID (WHERE condition)? (ORDER BY orderID=ID FROM tableidOrder=ID (ASC | DESC)?)? (LIMIT INT)? (OFFSET INT)?
+;
 
 condition
-	: condition (AND | OR) condition
+: 
+	condition (AND | OR) condition
 	| NOT condition
 	| LPAREN condition RPAREN
 	| SPECIFIC_ATTR attrName=ID FROM tableName=ID 'SEA' (EQUAL | NOT_EQUAL | LESS_THAN | LESS_THAN_EQUAL | GREATER_THAN | GREATER_THAN_EQUAL) value
@@ -31,7 +46,7 @@ condition
 	| SPECIFIC_ATTR attrName=ID FROM tableName=ID LIKE value
 	| SPECIFIC_ATTR attrName=ID FROM tableName=ID IS NULL
 	| SPECIFIC_ATTR attrName=ID FROM tableName=ID BETWEEN value AND value
-	;
+;
 
 value
 	: INT
@@ -51,6 +66,7 @@ value
 IMP_ORDER : 'MISHI';
 // Keywords
 SELECT : 'MUESTRAME';
+CREATE : 'HAZME UNA';
 // Select *
 ALL : 'TODOS LOS MISHI DATOS';
 SPECIFIC_COL: 'LOS MISHICAMPOS';
@@ -77,7 +93,6 @@ VALUES : 'LOS VALORES';
 UPDATE : 'ACTUALIZA LA';
 SET : 'ASIGNA';
 DELETE : 'ELIMINA';
-CREATE : 'HAZME UNA';
 USE : 'USA LA BD';
 TABLE : 'TABLA';
 ALTER : 'MODIFICA';

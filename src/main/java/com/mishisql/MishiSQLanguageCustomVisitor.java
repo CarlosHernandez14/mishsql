@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.mishisql.querystructure.CreateDatabaseStructure;
 import com.mishisql.querystructure.QueryStructure;
 import com.mishisql.querystructure.SelectStructure;
+import com.mishisql.querystructure.UseDatabaseStructure;
 
 public class MishiSQLanguageCustomVisitor extends MishiSQLanguageBaseVisitor<Object> {
 
@@ -16,6 +18,27 @@ public class MishiSQLanguageCustomVisitor extends MishiSQLanguageBaseVisitor<Obj
 
     // Map to store the table name and its structure
     private Map<String, List<String>> tableStructure;
+
+    @Override
+    public Object visitCreateDatabaseQuery(MishiSQLanguageParser.CreateDatabaseQueryContext ctx) {
+        String dbName = ctx.dbName.getText();
+        CreateDatabaseStructure createDbStructure = new CreateDatabaseStructure(dbName);
+
+        this.queryStructure = createDbStructure;
+        this.transformedQueries.add(createDbStructure);
+        return super.visitChildren(ctx);
+    }
+
+    @Override
+    public Object visitUseDatabaseQuery(MishiSQLanguageParser.UseDatabaseQueryContext ctx) {
+        String dbName = ctx.dbName.getText();
+        UseDatabaseStructure useDBStructure = new UseDatabaseStructure(dbName);
+
+        this.queryStructure = useDBStructure;
+        this.transformedQueries.add(useDBStructure);
+
+        return super.visitChildren(ctx);
+    }
 
     @Override
     public Object visitSelectQuery(MishiSQLanguageParser.SelectQueryContext ctx) {
