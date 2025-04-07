@@ -3,5 +3,5 @@
 # Ignores all vscode  files
 .vscode/*
 
-# ignore target files
+# Ignore target files
 target/*

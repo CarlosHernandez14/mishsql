@@ -2,14 +2,19 @@
 package com.mishisql;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.google.gson.Gson;
 import com.mishisql.exceptionhandling.CustomErrorListener;
 import com.mishisql.querystructure.JoinStructure;
+import com.mishisql.querystructure.CreateDatabaseStructure;
+import com.mishisql.querystructure.CreateTableStructure;
+import com.mishisql.querystructure.InsertStructure;
 import com.mishisql.querystructure.QueryStructure;
 import com.mishisql.querystructure.SelectStructure;
+import com.mishisql.querystructure.UseDatabaseStructure;
 
 public class MishiSQLanguageCustomVisitor extends MishiSQLanguageBaseVisitor<Object> {
 
@@ -18,7 +23,120 @@ public class MishiSQLanguageCustomVisitor extends MishiSQLanguageBaseVisitor<Obj
     private QueryStructure queryStructure;
 
     // Map to store the table name and its structure
-    private Map<String, List<String>> tableStructure;
+    private Map<String, List<String>> tableStructure = new HashMap<>();
+
+    private String currentDatabaseName = null;
+
+    @Override
+    public Object visitCreateDatabaseQuery(MishiSQLanguageParser.CreateDatabaseQueryContext ctx) {
+        String dbName = ctx.dbName.getText();
+
+        if (tableStructure.containsKey(dbName)) {
+            System.out.println("Error: La base de datos '"+ dbName + "' ya existe.");
+        } 
+
+        tableStructure.put(dbName, new ArrayList<>());
+
+        CreateDatabaseStructure createDbStructure = new CreateDatabaseStructure(dbName);
+
+        this.queryStructure = createDbStructure;
+        this.transformedQueries.add(createDbStructure);
+
+        return super.visitChildren(ctx);
+    }
+
+    @Override
+    public Object visitUseDatabaseQuery(MishiSQLanguageParser.UseDatabaseQueryContext ctx) {
+        String dbName = ctx.dbName.getText();
+
+        if (!tableStructure.containsKey(dbName)) {
+            System.out.println("Error: La base de datos '"+ dbName + "' no existe.");
+        } 
+
+        setCurrentDatabaseName(dbName);
+
+        UseDatabaseStructure useDBStructure = new UseDatabaseStructure(dbName);
+
+        this.queryStructure = useDBStructure;
+        this.transformedQueries.add(useDBStructure);
+
+        return super.visitChildren(ctx);
+    }
+
+    @Override
+    public Object visitCreateTableQuery(MishiSQLanguageParser.CreateTableQueryContext ctx) {
+        String tableName = ctx.tableName.getText();
+
+        List<String> tables = tableStructure.get(getCurrentDatabaseName());
+
+        if (tables.contains(tableName)) {
+            System.out.println("Error: La tabla '"+ tableName + "' ya existe en la base de datos '" + getCurrentDatabaseName() + "'.");
+        }
+
+        tables.add(tableName);
+
+
+        CreateTableStructure structure = new CreateTableStructure(tableName);
+
+        // Procesar campos
+        for (MishiSQLanguageParser.TableFieldContext fieldCtx : ctx.tableFields().tableField()) {
+            String name = fieldCtx.fieldName.getText();
+            String type;
+            switch (fieldCtx.fieldType.getText()) {
+                case    "ENTERO"    : type = "INT";             break;
+                case    "TEXTO"     : type = "VARCHAR(255)";    break;
+                case    "DECIMAL"   : type = "DECIMAL";         break;
+                default             : type = "TEXT";
+            }
+
+            CreateTableStructure.ColumnDefinition column = new CreateTableStructure.ColumnDefinition(name, type);
+
+            if (fieldCtx.constraints != null) {
+                for (MishiSQLanguageParser.FieldConstraintContext cons : fieldCtx.constraints) {
+                    if (cons.getText().equals("MISHILLAVEPRIMARIA") || cons.getText().contains("PRIMARIA")) {
+                        column.isPrimaryKey = true;
+                    }
+                    if (cons.getText().contains("NOSEA") || cons.getText().contains("NULO")) {
+                        column.isNotNull = true;
+                    }
+                }
+            }
+
+            structure.addColumn(column);
+        }
+
+        // Foreign key clause
+        if (ctx.foreignKeyClause() != null) {
+            String fk = ctx.foreignKeyClause().fkField.getText();
+            String refField = ctx.foreignKeyClause().refField.getText();
+            String refTable = ctx.foreignKeyClause().refTable.getText();
+            structure.setForeignKey(fk, refField, refTable);
+        }
+
+        this.queryStructure = structure;
+        this.transformedQueries.add(structure);
+
+        return super.visitChildren(ctx);
+    }
+
+    @Override
+    public Object visitInsertQuery(MishiSQLanguageParser.InsertQueryContext ctx) {
+        String tableName = ctx.ID().getText();
+        InsertStructure insertStructure = new InsertStructure(tableName);
+
+        for (MishiSQLanguageParser.ValueTupleContext tupleCtx : ctx.valueTuples().valueTuple()) {
+            List<String> values = new ArrayList<>();
+            for (MishiSQLanguageParser.ValueContext valCtx : tupleCtx.value()) {
+                values.add(valCtx.getText());
+            }
+            insertStructure.addRow(values);
+        }   
+
+        this.queryStructure = insertStructure;
+        this.transformedQueries.add(insertStructure);
+        
+        return super.visitChildren(ctx);
+    }
 
     // Custom error listener to also handle the semantic errors
     private CustomErrorListener errorListener;
@@ -180,6 +298,21 @@ public class MishiSQLanguageCustomVisitor extends MishiSQLanguageBaseVisitor<Obj
         return this.transformedQueries.stream()
                 .map(QueryStructure::toSQL)
                 .toList();
+    }
+    
+    // Método para asignar la base de datos activa
+    public void setCurrentDatabaseName(String dbName) {
+        this.currentDatabaseName = dbName;
+    }
+
+    // Método para obtener el nombre de la base de datos actual
+    public String getCurrentDatabaseName() {
+        return this.currentDatabaseName;
+    }
+
+    // Validar si hay una base seleccionada
+    public boolean currentDatabaseSelected() {
+        return this.currentDatabaseName != null;
     }
 
 }
