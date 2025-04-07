@@ -47,9 +47,6 @@
     </plugins>
   </build>
   <properties>
-    <maven.compiler.target>${java.version}</maven.compiler.target>
-    <java.version>17</java.version>
-    <maven.compiler.source>${java.version}</maven.compiler.source>
     <antlr4.version>4.9.2</antlr4.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>

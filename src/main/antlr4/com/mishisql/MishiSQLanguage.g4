@@ -91,12 +91,6 @@ valueTuple
 	LPAREN value (COMMA value)* RPAREN
 ;
 
-selectQuery 
-:
-	IMP_ORDER SELECT (ALL | (SPECIFIC_COL ids+=ID (COMMA ids+=ID)*)) 
-	FROM tableId=ID (WHERE condition)? (ORDER BY orderID=ID FROM tableidOrder=ID (ASC | DESC)?)? (LIMIT INT)? (OFFSET INT)?
-;
-
 condition
 : 
 	condition (AND | OR) condition

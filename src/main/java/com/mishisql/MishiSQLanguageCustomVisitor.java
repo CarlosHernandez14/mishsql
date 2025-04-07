@@ -27,12 +27,16 @@ public class MishiSQLanguageCustomVisitor extends MishiSQLanguageBaseVisitor<Obj
 
     private String currentDatabaseName = null;
 
+    // Custom error listener to also handle the semantic errors
+    private CustomErrorListener errorListener;
+
     @Override
     public Object visitCreateDatabaseQuery(MishiSQLanguageParser.CreateDatabaseQueryContext ctx) {
         String dbName = ctx.dbName.getText();
 
         if (tableStructure.containsKey(dbName)) {
-            System.out.println("Error: La base de datos '"+ dbName + "' ya existe.");
+            // System.out.println("Error: La base de datos '"+ dbName + "' ya existe.");
+            errorListener.addSemanticError("La base de datos '"+ dbName + "' ya existe.", ctx.start.getLine(), ctx.start.getCharPositionInLine());
         } 
 
         tableStructure.put(dbName, new ArrayList<>());
@@ -50,7 +54,8 @@ public class MishiSQLanguageCustomVisitor extends MishiSQLanguageBaseVisitor<Obj
         String dbName = ctx.dbName.getText();
 
         if (!tableStructure.containsKey(dbName)) {
-            System.out.println("Error: La base de datos '"+ dbName + "' no existe.");
+            // System.out.println("Error: La base de datos '"+ dbName + "' no existe.");
+            errorListener.addSemanticError("La base de datos '"+ dbName + "' no existe.", ctx.start.getLine(), ctx.start.getCharPositionInLine());
         } 
 
         setCurrentDatabaseName(dbName);
@@ -70,7 +75,8 @@ public class MishiSQLanguageCustomVisitor extends MishiSQLanguageBaseVisitor<Obj
         List<String> tables = tableStructure.get(getCurrentDatabaseName());
 
         if (tables.contains(tableName)) {
-            System.out.println("Error: La tabla '"+ tableName + "' ya existe en la base de datos '" + getCurrentDatabaseName() + "'.");
+            // System.out.println("Error: La tabla '"+ tableName + "' ya existe en la base de datos '" + getCurrentDatabaseName() + "'.");
+            errorListener.addSemanticError("La tabla '"+ tableName + "' ya existe en la base de datos '" + getCurrentDatabaseName() + "'.", ctx.start.getLine(), ctx.start.getCharPositionInLine());
         }
 
         tables.add(tableName);
@@ -137,9 +143,6 @@ public class MishiSQLanguageCustomVisitor extends MishiSQLanguageBaseVisitor<Obj
         
         return super.visitChildren(ctx);
     }
-
-    // Custom error listener to also handle the semantic errors
-    private CustomErrorListener errorListener;
 
     @Override
     public Object visitSelectQuery(MishiSQLanguageParser.SelectQueryContext ctx) {
