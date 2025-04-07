@@ -55,7 +55,7 @@ public class MishiSQLanguageCustomVisitor extends MishiSQLanguageBaseVisitor<Obj
 
         if (!tableStructure.containsKey(dbName)) {
             // System.out.println("Error: La base de datos '"+ dbName + "' no existe.");
-            errorListener.addSemanticError("La base de datos '"+ dbName + "' no existe.", ctx.start.getLine(), ctx.start.getCharPositionInLine());
+            // errorListener.addSemanticError("La base de datos '"+ dbName + "' no existe.", ctx.start.getLine(), ctx.start.getCharPositionInLine());
         } 
 
         setCurrentDatabaseName(dbName);
@@ -74,7 +74,11 @@ public class MishiSQLanguageCustomVisitor extends MishiSQLanguageBaseVisitor<Obj
 
         List<String> tables = tableStructure.get(getCurrentDatabaseName());
 
-        if (tables.contains(tableName)) {
+        if (tables == null) {
+            // System.out.println("Error: No hay base de datos seleccionada.");
+            // errorListener.addSemanticError("No hay base de datos seleccionada.", ctx.start.getLine(), ctx.start.getCharPositionInLine());
+            tables = new ArrayList<>();
+        } else if (tables.contains(tableName)) {
             // System.out.println("Error: La tabla '"+ tableName + "' ya existe en la base de datos '" + getCurrentDatabaseName() + "'.");
             errorListener.addSemanticError("La tabla '"+ tableName + "' ya existe en la base de datos '" + getCurrentDatabaseName() + "'.", ctx.start.getLine(), ctx.start.getCharPositionInLine());
         }

@@ -1,4 +1,4 @@
-// Generated from c:/Users/carlo/Documents/CompilersAntlr/mishisql/src/main/antlr4/com/mishisql/MishiSQLanguage.g4 by ANTLR 4.13.1
+// Generated from c:/Users/carlo/Documents/CompilersAntlr/mishsql/src/main/antlr4/com/mishisql/MishiSQLanguage.g4 by ANTLR 4.13.1
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -136,6 +136,14 @@ public class MishiSQLanguageParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_start; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MishiSQLanguageListener ) ((MishiSQLanguageListener)listener).enterStart(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MishiSQLanguageListener ) ((MishiSQLanguageListener)listener).exitStart(this);
+		}
 	}
 
 	public final StartContext start() throws RecognitionException {
@@ -195,6 +203,14 @@ public class MishiSQLanguageParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_query; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MishiSQLanguageListener ) ((MishiSQLanguageListener)listener).enterQuery(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MishiSQLanguageListener ) ((MishiSQLanguageListener)listener).exitQuery(this);
+		}
 	}
 
 	public final QueryContext query() throws RecognitionException {
@@ -300,6 +316,14 @@ public class MishiSQLanguageParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_selectQuery; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MishiSQLanguageListener ) ((MishiSQLanguageListener)listener).enterSelectQuery(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MishiSQLanguageListener ) ((MishiSQLanguageListener)listener).exitSelectQuery(this);
+		}
 	}
 
 	public final SelectQueryContext selectQuery() throws RecognitionException {
@@ -497,6 +521,14 @@ public class MishiSQLanguageParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_from_join; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MishiSQLanguageListener ) ((MishiSQLanguageListener)listener).enterFrom_join(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MishiSQLanguageListener ) ((MishiSQLanguageListener)listener).exitFrom_join(this);
+		}
 	}
 
 	public final From_joinContext from_join() throws RecognitionException {
@@ -554,6 +586,14 @@ public class MishiSQLanguageParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_createDatabaseQuery; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MishiSQLanguageListener ) ((MishiSQLanguageListener)listener).enterCreateDatabaseQuery(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MishiSQLanguageListener ) ((MishiSQLanguageListener)listener).exitCreateDatabaseQuery(this);
+		}
 	}
 
 	public final CreateDatabaseQueryContext createDatabaseQuery() throws RecognitionException {
@@ -593,6 +633,14 @@ public class MishiSQLanguageParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_useDatabaseQuery; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MishiSQLanguageListener ) ((MishiSQLanguageListener)listener).enterUseDatabaseQuery(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MishiSQLanguageListener ) ((MishiSQLanguageListener)listener).exitUseDatabaseQuery(this);
+		}
 	}
 
 	public final UseDatabaseQueryContext useDatabaseQuery() throws RecognitionException {
@@ -639,6 +687,14 @@ public class MishiSQLanguageParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_createTableQuery; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MishiSQLanguageListener ) ((MishiSQLanguageListener)listener).enterCreateTableQuery(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MishiSQLanguageListener ) ((MishiSQLanguageListener)listener).exitCreateTableQuery(this);
+		}
 	}
 
 	public final CreateTableQueryContext createTableQuery() throws RecognitionException {
@@ -701,6 +757,14 @@ public class MishiSQLanguageParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_tableFields; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MishiSQLanguageListener ) ((MishiSQLanguageListener)listener).enterTableFields(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MishiSQLanguageListener ) ((MishiSQLanguageListener)listener).exitTableFields(this);
+		}
 	}
 
 	public final TableFieldsContext tableFields() throws RecognitionException {
@@ -774,6 +838,14 @@ public class MishiSQLanguageParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_tableField; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MishiSQLanguageListener ) ((MishiSQLanguageListener)listener).enterTableField(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MishiSQLanguageListener ) ((MishiSQLanguageListener)listener).exitTableField(this);
+		}
 	}
 
 	public final TableFieldContext tableField() throws RecognitionException {
@@ -834,6 +906,14 @@ public class MishiSQLanguageParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_sqlType; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MishiSQLanguageListener ) ((MishiSQLanguageListener)listener).enterSqlType(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MishiSQLanguageListener ) ((MishiSQLanguageListener)listener).exitSqlType(this);
+		}
 	}
 
 	public final SqlTypeContext sqlType() throws RecognitionException {
@@ -872,6 +952,14 @@ public class MishiSQLanguageParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_fieldConstraint; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MishiSQLanguageListener ) ((MishiSQLanguageListener)listener).enterFieldConstraint(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MishiSQLanguageListener ) ((MishiSQLanguageListener)listener).exitFieldConstraint(this);
+		}
 	}
 
 	public final FieldConstraintContext fieldConstraint() throws RecognitionException {
@@ -918,6 +1006,14 @@ public class MishiSQLanguageParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_foreignKeyClause; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MishiSQLanguageListener ) ((MishiSQLanguageListener)listener).enterForeignKeyClause(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MishiSQLanguageListener ) ((MishiSQLanguageListener)listener).exitForeignKeyClause(this);
+		}
 	}
 
 	public final ForeignKeyClauseContext foreignKeyClause() throws RecognitionException {
@@ -964,6 +1060,14 @@ public class MishiSQLanguageParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_insertQuery; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MishiSQLanguageListener ) ((MishiSQLanguageListener)listener).enterInsertQuery(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MishiSQLanguageListener ) ((MishiSQLanguageListener)listener).exitInsertQuery(this);
+		}
 	}
 
 	public final InsertQueryContext insertQuery() throws RecognitionException {
@@ -1011,6 +1115,14 @@ public class MishiSQLanguageParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_valueTuples; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MishiSQLanguageListener ) ((MishiSQLanguageListener)listener).enterValueTuples(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MishiSQLanguageListener ) ((MishiSQLanguageListener)listener).exitValueTuples(this);
+		}
 	}
 
 	public final ValueTuplesContext valueTuples() throws RecognitionException {
@@ -1069,6 +1181,14 @@ public class MishiSQLanguageParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_valueTuple; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MishiSQLanguageListener ) ((MishiSQLanguageListener)listener).enterValueTuple(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MishiSQLanguageListener ) ((MishiSQLanguageListener)listener).exitValueTuple(this);
+		}
 	}
 
 	public final ValueTupleContext valueTuple() throws RecognitionException {
@@ -1159,6 +1279,14 @@ public class MishiSQLanguageParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_condition; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MishiSQLanguageListener ) ((MishiSQLanguageListener)listener).enterCondition(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MishiSQLanguageListener ) ((MishiSQLanguageListener)listener).exitCondition(this);
+		}
 	}
 
 	public final ConditionContext condition() throws RecognitionException {
@@ -1379,6 +1507,14 @@ public class MishiSQLanguageParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_join_condition; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MishiSQLanguageListener ) ((MishiSQLanguageListener)listener).enterJoin_condition(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MishiSQLanguageListener ) ((MishiSQLanguageListener)listener).exitJoin_condition(this);
+		}
 	}
 
 	public final Join_conditionContext join_condition() throws RecognitionException {
@@ -1441,6 +1577,14 @@ public class MishiSQLanguageParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_value; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MishiSQLanguageListener ) ((MishiSQLanguageListener)listener).enterValue(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MishiSQLanguageListener ) ((MishiSQLanguageListener)listener).exitValue(this);
+		}
 	}
 
 	public final ValueContext value() throws RecognitionException {
