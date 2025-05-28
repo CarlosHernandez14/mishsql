@@ -25,10 +25,16 @@ public class MishiSQLanguageCustomVisitor extends MishiSQLanguageBaseVisitor<Obj
     // Map to store the table name and its structure
     private Map<String, List<String>> tableStructure = new HashMap<>();
 
+    private List<CreateTableStructure> createdTables = new ArrayList<>();
+
     private String currentDatabaseName = null;
 
     // Custom error listener to also handle the semantic errors
     private CustomErrorListener errorListener;
+
+    public List<CreateTableStructure> getCreatedTables() {
+        return createdTables;
+    }
 
     @Override
     public Object visitCreateDatabaseQuery(MishiSQLanguageParser.CreateDatabaseQueryContext ctx) {
@@ -114,6 +120,9 @@ public class MishiSQLanguageCustomVisitor extends MishiSQLanguageBaseVisitor<Obj
 
             structure.addColumn(column);
         }
+
+        // Add the created table structure to the list
+        this.createdTables.add(structure);
 
         // Foreign key clause
         if (ctx.foreignKeyClause() != null) {

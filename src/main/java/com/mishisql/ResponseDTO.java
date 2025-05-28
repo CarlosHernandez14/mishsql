@@ -1,6 +1,7 @@
 package com.mishisql;
 
 import java.util.List;
+import java.util.Map;
 
 import com.google.gson.Gson;
 import com.mishisql.exceptionhandling.CustomErrorListener.CompilerError;
@@ -11,9 +12,12 @@ public class ResponseDTO {
 
     private List<CompilerError> errors;
 
-    public ResponseDTO(List<String> transformedQueries, List<CompilerError> errors) {
+    private Map<String, String> cruds;
+
+    public ResponseDTO(List<String> transformedQueries, List<CompilerError> errors, Map<String, String> cruds) {
         this.transformedQueries = transformedQueries;
         this.errors = errors;
+        this.cruds = cruds;
     }
 
     public String getReponseAsJson() {

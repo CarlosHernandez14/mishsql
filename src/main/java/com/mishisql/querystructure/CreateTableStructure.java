@@ -48,6 +48,14 @@ public class CreateTableStructure extends QueryStructure {
         this.referenceTable = refTable;
     }
 
+    public String getTableName() {
+        return tableName;
+    }
+
+    public List<ColumnDefinition> getColumns() {
+        return columns;
+    }
+
     @Override
     public String toSQL() {
         List<String> colDefs = new ArrayList<>();
