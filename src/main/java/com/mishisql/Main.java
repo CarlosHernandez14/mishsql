@@ -1,6 +1,8 @@
 package com.mishisql;
 
 import java.io.IOException;
+import java.util.Map;
+
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -38,8 +40,8 @@ public class Main {
 
             visitor.visit(tree);
 
-
-            ResponseDTO responseDTO = new ResponseDTO(visitor.getTransformedQueriesAsList(), errorListener.getErrors(), CrudGenerator.generateAllCruds(visitor.getCreatedTables()));
+            Map<String,String> cruds = CrudGenerator.generateAllCruds(visitor.getCreatedTables());
+            ResponseDTO responseDTO = new ResponseDTO(visitor.getTransformedQueriesAsList(), errorListener.getErrors(), cruds);
 
             System.out.println(responseDTO.getReponseAsJson());
             // visitor.getTransformedQueries().forEach(query -> {

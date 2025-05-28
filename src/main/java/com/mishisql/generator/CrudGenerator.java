@@ -128,6 +128,12 @@ public class CrudGenerator {
         Map<String, String> map = new HashMap<>();
         for (CreateTableStructure t : tables) {
             String code = generateCrudClass(t);
+
+            code = code.replace("\r", "");
+
+            code = code.replace("\n", "\\n");
+
+            // Ya no necesitamos eliminar líneas vacías porque ya no hay saltos reales
             String name = capitalize(t.getTableName()) + "Crud.java";
             map.put(name, code);
         }

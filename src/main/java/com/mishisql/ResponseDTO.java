@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.mishisql.exceptionhandling.CustomErrorListener.CompilerError;
 import com.mishisql.querystructure.QueryStructure;
 
@@ -21,7 +22,10 @@ public class ResponseDTO {
     }
 
     public String getReponseAsJson() {
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder()
+            .disableHtmlEscaping()  // para que no convierta '>' en \u003e, etc.
+            // .setPrettyPrinting()    // para que meta saltos de línea y espacios _fuera_ de los literales
+            .create();
         return gson.toJson(this);
     }
 }
